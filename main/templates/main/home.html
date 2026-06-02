@@ -1,26 +1,76 @@
-
-
+{# Extend the base landing page template #}
 {% extends "main/landing_page.html" %}
 
+{# Override the content block from base template #}
 {% block content %}
+  {# Main home section with dark background #}
   <div class="home bg-dark">
 
+    {# Container for responsive layout #}
     <div class="container">
-      <h1 class="text-center text-light mb-3">Our Dishes</h1>
+      {# Main heading for menu items section #}
+      <h1 class="text-center text-light mb-3">
+        {# Knife and fork emoji for visual appeal #}
+        🍴 Our Dishes
+      </h1>
+
+      {# Sub-heading with description #}
+      <p class="text-center text-light mb-5">Fresh, delicious food prepared just for you</p>
+
+      {# Row for dish cards grid layout #}
       <div class="row">
+        {# Loop through all menu items #}
         {% for item in menu_items %}
-            <div class="col-sm-4">
+            {# Column for individual dish card - responsive sizing #}
+            <div class="col-md-4 col-sm-6 col-xs-12 mb-4">
+                {# Card container with hover effects and fixed height #}
                 <div class="card mb-3" style="height: fit-content; overflow: auto;">
-                  <img src="{{ item.image.url }}" style="height: 250px; width: 300px;">
+                  {# Dish image with fixed dimensions #}
+                  <img src="{{ item.image.url }}" 
+                       style="height: 250px; width: 100%; object-fit: cover;" 
+                       alt="{{ item.title }}"
+                       class="card-img-top">
+
+                    {# Card body with item details #}
                     <div class="card-body text-center">      
-                      <button class="btn btn-warning">By:{{ item.created_by }}</button>         
-                      <h5 class="text-center"><a href="{% url 'main:dishes' item.slug %}">{{ item.title }} </a><span class="badge badge-{{ item.label_colour }}">{{ item.labels }}</span></h5>
-                      <p class="text-center">{{ item.description }}</p>
-                      <h5 class="text-center">₹ {{ item.price }}</h5>    
-                      <a href="{% url 'main:dishes' item.slug %}" class="btn btn-info float-right">View Details</a>           
+                              
+                      {# Dish title with link and badge for special label #}
+                      <h5 class="text-center">
+                        {# Link to dish detail page #}
+                        <a href="{% url 'main:dishes' item.slug %}" class="text-dark font-weight-bold">
+                          {{ item.title }} 
+                        </a>
+                        {# Special label badge with dynamic color #}
+                        <span class="badge badge-{{ item.label_colour }} ml-2">
+                          {{ item.labels }}
+                        </span>
+                      </h5>
+
+                      {# Dish description #}
+                      <p class="text-center text-muted mt-2">
+                        {{ item.description }}
+                      </p>
+
+                      {# Price display #}
+                      <h5 class="text-center text-success font-weight-bold">
+                        💵 Ksh {{ item.price }}
+                      </h5>
+
+                      {# View details button linking to dish page #}
+                      <a href="{% url 'main:dishes' item.slug %}" class="btn btn-primary btn-sm float-right mt-3">
+                        {# Eye icon for view details #}
+                        <i class="fa fa-eye"></i> View Details
+                      </a>           
                     </div>
                 </div>
             </div>            
+        {% empty %}
+            {# Message if no dishes are available #}
+            <div class="col-md-12">
+              <div class="alert alert-info text-center mt-4">
+                <h4>No dishes available at the moment. Check back soon!</h4>
+              </div>
+            </div>
         {% endfor %}
       </div>
     </div>

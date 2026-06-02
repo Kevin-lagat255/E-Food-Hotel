@@ -1,167 +1,282 @@
 {% load get_group %}
+{# Load Django static files template tag #}
 {% load static %}
+
+{# HTML5 document type declaration #}
 <!DOCTYPE html>
+
+{# Root HTML element with English language #}
 <html lang="en">
+
+{# Head section containing metadata and stylesheets #}
 <head>
+	{# Character encoding for UTF-8 support #}
 	<meta charset="utf-8">
-	<title>Online Food Order System</title>
 
+	{# Page title shown in browser tab #}
+	<title>E-Food Hotel | Order Delicious Food Online</title>
+
+	{# Internet Explorer compatibility mode #}
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+	{# Responsive viewport settings for mobile devices #}
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="keywords" content="">
-	<meta name="description" content="">
-<!--
 
-Template 2076 Zentro
+	{# SEO keywords for search engines #}
+	<meta name="keywords" content="food ordering, online food, delivery, snacks, restaurant">
 
-http://www.tooplate.com/view/2076-zentro
+	{# SEO description for search engines #}
+	<meta name="description" content="Order delicious food online from Sarang's Snacks Center. Fresh, tasty meals delivered to your doorstep.">
 
--->
-	<link rel="stylesheet" href="{% static "css/bootstrap.min.css"               %}">
-	<link rel="stylesheet" href="{% static "css/animate.min.css"                 %}">
-	<link rel="stylesheet" href="{% static "css/font-awesome.min.css"            %}">
-	<link rel="stylesheet" href="{% static "css/nivo-lightbox.css"               %}">
-	<link rel="stylesheet" href="{% static "css/nivo_themes/default/default.css" %}">
-	<link rel="stylesheet" href="{% static "css/style.css"                       %}">
-	<link href='https://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
+	{# Bootstrap CSS framework for responsive design #}
+	<link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}?v=1">
+
+	{# Animate.css for scroll animations #}
+	<link rel="stylesheet" href="{% static "css/animate.min.css" %}?v=1">
+
+	{# Font Awesome icons library #}
+	<link rel="stylesheet" href="{% static "css/font-awesome.min.css" %}?v=1">
+
+	{# Nivo lightbox for image galleries #}
+	<link rel="stylesheet" href="{% static "css/nivo-lightbox.css" %}?v=1">
+
+	{# Nivo lightbox theme styles #}
+	<link rel="stylesheet" href="{% static "css/nivo_themes/default/default.css" %}?v=1">
+
+	{# Custom application styles #}
+	<link rel="stylesheet" href="{% static "css/style.css" %}?v=1">>
+
+	{# Google Fonts - Roboto font family for modern typography #}
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
 </head>
+
+{# Page body content #}
 <body>
 
-<!-- preloader section -->
-<section class="preloader">
-	<div class="sk-spinner sk-spinner-pulse"></div>
-</section>
-
-<!-- navigation section -->
+{# Navigation bar section with fixed positioning #}
 <section class="navbar navbar-default navbar-fixed-top" role="navigation">
+	{# Container for responsive navigation width #}
 	<div class="container">
+		{# Navigation header with brand and toggle button #}
 		<div class="navbar-header">
+			{# Mobile menu toggle button #}
 			<button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+				{# Three horizontal lines for hamburger menu #}
 				<span class="icon icon-bar"></span>
 				<span class="icon icon-bar"></span>
 				<span class="icon icon-bar"></span>
 			</button>
-			<a href="#" class="navbar-brand">Sarang's Snacks Center</a>
+
+			{# Brand logo/name linking to home #}
+			<a href="#" class="navbar-brand">🍽️ Sarang's Snacks Center</a>
 		</div>
+
+		{# Collapsible navigation menu #}
 		<div class="collapse navbar-collapse">
+			{# Navigation menu list #}
 			<ul class="nav navbar-nav navbar-right">
-                <li><a href="{% url 'main:home' %}" class="mr-2 text-light">Home</a></li>
+                {# Home link always visible #}
+                <li>
+                	<a href="{% url 'main:home' %}" class="mr-2 text-light">
+                		{# Home icon #}
+                		<i class="fa fa-home"></i> Home
+                	</a>
+                </li>
+
+        	    {# Check if user is logged in #}
         	    {% if user.is_authenticated %}
+                    {# Check if user is admin #}
                     {% if request.user|has_group:"admin_owner" %} 
-                        <li><a href="{% url 'main:admin_dashboard' %}" class="mr-2 text-light">DashBoard</a></li>
-                        <li><form class="logout-link mt-2 pt-2" action="{% url 'accounts:logout' %}" method="post">
+                        {# Admin/Owner dashboard link #}
+                        <li>
+                        	<a href="{% url 'main:admin_dashboard' %}" class="mr-2 text-light">
+                        		{# Dashboard icon #}
+                        		<i class="fa fa-bar-chart"></i> Dashboard
+                        	</a>
+                        </li>
+                        
+                        {# Logout form for admin #}
+                        <li>
+                        	<form class="logout-link mt-2 pt-2" action="{% url 'accounts:logout' %}" method="post">
+                                {# CSRF token for security #}
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-link navbar-btn">Logout</button>
+                                {# Logout button styled as link #}
+                                <button type="submit" class="btn btn-link navbar-btn">
+                                	<i class="fa fa-sign-out"></i> Logout
+                                </button>
                             </form>
                         </li> 
+
+                    {# User (non-admin) navigation #}
                     {% else %}
-                        <li><a href="{% url 'main:cart' %}" class="mr-2 text-light">My Cart🛒</a></li>
-                        <li><a href="{% url 'main:order_details' %}" class="mr-2 text-light">Your Orders</a></li>
+                        {# Cart link with icon #}
+                        <li>
+                        	<a href="{% url 'main:cart' %}" class="mr-2 text-light">
+                        		{# Cart icon #}
+                        		<i class="fa fa-shopping-cart"></i> My Cart 🛒
+                        	</a>
+                        </li>
+
+                        {# Order history link #}
+                        <li>
+                        	<a href="{% url 'main:order_details' %}" class="mr-2 text-light">
+                        		{# Orders icon #}
+                        		<i class="fa fa-list"></i> Your Orders
+                        	</a>
+                        </li>
+
+                        {# Logout form for user #}
                         <li>
                             <form class="logout-link" action="{% url 'accounts:logout' %}" method="post">
+                                {# CSRF token for security #}
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-link navbar-btn">Logout</button>
+                                {# Logout button #}
+                                <button type="submit" class="btn btn-link navbar-btn">
+                                	<i class="fa fa-sign-out"></i> Logout
+                                </button>
                             </form>
                         </li>
                     {% endif %}
+
+                {# User not authenticated - show login/signup #}
                 {% else %}
-                    <li><a href="{% url 'accounts:login' %}" class="mr-2 text-light">Login</a></li>
-                    <li><a href="{% url 'accounts:signup' %}" class="mr-2 text-light">SignUp</a></li>
+                    {# Login link #}
+                    <li>
+                    	<a href="{% url 'accounts:login' %}" class="mr-2 text-light">
+                    		{# Login icon #}
+                    		<i class="fa fa-sign-in"></i> Login
+                    	</a>
+                    </li>
+
+                    {# Sign up link #}
+                    <li>
+                    	<a href="{% url 'accounts:signup' %}" class="mr-2 text-light">
+                    		{# Signup icon #}
+                    		<i class="fa fa-user-plus"></i> Sign Up
+                    	</a>
+                    </li>
                 {% endif %}
 			</ul>
 		</div>
 	</div>
 </section>
 
-
-<!-- home section -->
+{# Hero/Home section with parallax background #}
 <section id="home" class="parallax-section">
+	{# Hero content container #}
 	<div class="container">
+		{# Hero content row #}
 		<div class="row">
+			{# Hero text column (full width) #}
 			<div class="col-md-12 col-sm-12">
-				<h1>Sarang's Snacks Center</h1>
-				<h2>This app is made in Django</h2>
+				{# Main hero title #}
+				<h1>🍕 E-Food Hotel</h1>
+				{# Hero subtitle #}
+				<h2>A Delicious Meal is Just One Click Away!</h2>
 			</div>
 		</div>
 	</div>		
 </section>
 
+{# Main content section #}
+<main role="main">
+    {# Display success/error/info messages if any exist #}
+    {% if messages %}
+      {% for message in messages %}
+        {# Alert message with dynamic class based on message type #}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          {# Close button for alert #}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      {% endfor %}
+    {% endif %}
 
-<!-- order section -->
-    <main role="main">
-        {% if messages %}
-          {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">
-              {{ message }}
-            </div>
-          {% endfor %}
-        {% endif %}
+    {# Content block to be overridden by child templates #}
+    {% block content %}
+    {# Child templates insert content here #}
+    {% endblock %}
 
-        {% block content %}
-        
-        {% endblock content %}
+</main>
 
-    </main>
-
-
-<!-- footer section -->
-<footer class="parallax-section">
+{# Footer section with background #}
+<footer class="section-padding">
+	{# Footer content container #}
 	<div class="container">
+		{# Footer content row #}
 		<div class="row">
-			<div class="col-md-4 col-sm-4 wow fadeInUp" data-wow-delay="0.6s">
-				<h2 class="heading">Contact Info.</h2>
-				<div class="ph">
-					<p><i class="fa fa-phone"></i> Phone</p>
-					<h4>95-7920-2900</h4>
-				</div>
-				<div class="address">
-					<p><i class="fa fa-map-marker"></i> Our Location</p>
-					<h4>Shivaji Nagar, Pune</h4>
-				</div>
+			{# About section #}
+			<div class="col-md-4 mb-3">
+				<h2>About Us</h2>
+				<p>Sarang's Snacks Center offers the finest quality food delivered right to your door. Fresh, delicious, and always on time.</p>
 			</div>
-			<div class="col-md-4 col-sm-4 wow fadeInUp" data-wow-delay="0.6s">
-				<h2 class="heading">Open Hours</h2>
-					<p>Sunday <span>10:30 AM - 10:00 PM</span></p>
-					<p>Mon-Fri <span>9:00 AM - 8:00 PM</span></p>
-					<p>Saturday <span>11:30 AM - 10:00 PM</span></p>
+
+			{# Contact info section #}
+			<div class="col-md-4 mb-3">
+				<h2>Contact Info</h2>
+				<p class="ph">
+					{# Phone icon #}
+					<i class="fa fa-phone"></i>
+					{# Phone number #}
+					(+254) 700-123-456
+				</p>
+				<p class="address">
+					{# Email icon #}
+					<i class="fa fa-envelope"></i>
+					{# Email address #}
+					info@sarangssnacks.com
+				</p>
 			</div>
-			<div class="col-md-4 col-sm-4 wow fadeInUp" data-wow-delay="0.6s">
-				<h2 class="heading">Follow Us</h2>
+
+			{# Social media links section #}
+			<div class="col-md-4 mb-3">
+				<h2>Follow Us</h2>
+				{# Social media links list #}
 				<ul class="social-icon">
-					<li><a href="#" class="fa fa-facebook wow bounceIn" data-wow-delay="0.3s"></a></li>
-					<li><a href="#" class="fa fa-twitter wow bounceIn" data-wow-delay="0.6s"></a></li>
-					<li><a href="#" class="fa fa-behance wow bounceIn" data-wow-delay="0.9s"></a></li>
-					<li><a href="#" class="fa fa-dribbble wow bounceIn" data-wow-delay="0.9s"></a></li>
-					<li><a href="https://github.com/Joshi-Sarang/Django-Online-Food-ordering-System" class="fa fa-github wow bounceIn" data-wow-delay="0.9s"></a></li>
+					<li><a href="#" class="fa fa-facebook"></a></li>
+					<li><a href="#" class="fa fa-twitter"></a></li>
+					<li><a href="#" class="fa fa-instagram"></a></li>
+					<li><a href="#" class="fa fa-youtube"></a></li>
 				</ul>
 			</div>
 		</div>
 	</div>
 </footer>
 
-
-<!-- copyright section -->
+{# Copyright section #}
 <section id="copyright">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12 col-sm-12">
-				<h3>This app is made in Django</h3>
-				<p>Copyright © Online Food Order System 
-                
-
+			<div class="col-md-12 text-center">
+				{# Copyright text #}
+				<p>&copy; 2026 Sarang's Snacks Center. All Rights Reserved.</p>
 			</div>
 		</div>
 	</div>
 </section>
 
-<!-- JAVASCRIPT JS FILES -->	
-<script src="{% static "js/jquery.js"            %}" ></script>
-<script src="{% static "js/bootstrap.min.js"     %}" ></script>
-<script src="{% static "js/jquery.parallax.js"   %}" ></script>
-<script src="{% static "js/smoothscroll.js"      %}" ></script>
-<script src="{% static "js/nivo-lightbox.min.js" %}" ></script>
-<script src="{% static "js/wow.min.js"           %}" ></script>
-<script src="{% static "js/custom.js"            %}" ></script>
+{# jQuery library for DOM manipulation #}
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+
+{# Popper.js for Bootstrap dropdown/tooltip functionality #}
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+{# Bootstrap JS for component functionality #}
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2e50Y2D+p3fQ6eoVvi2+qnQLsXvK5fyeOLFbg4bLNUMZRoMtmg5nLn6TF8=" crossorigin="anonymous"></script>
+
+{# Animate on scroll library #}
+<script src="{% static 'js/wow.min.js' %}?v=1"></script>
+
+{# Parallax scrolling effect #}
+<script src="{% static 'js/jquery.parallax.js' %}?v=1"></script>
+
+{# Nivo lightbox for image galleries #}
+<script src="{% static 'js/nivo-lightbox.min.js' %}?v=1"></script>
+
+{# Custom JavaScript for application functionality #}
+<script src="{% static 'js/custom.js' %}?v=1"></script>
 
 </body>
 </html>

@@ -1,86 +1,318 @@
-{% extends "main/layout.html" %}
+{# Extend the base landing page template #}
+{% extends "main/landing_page.html" %}
+
+{# Override content block #}
 {% block content %}
-<div class="cart">
+
+{# Main orders page section with dark background #}
+<div class="orders bg-dark min-vh-100 py-5">
+    
+    {# Responsive container for page content #}
     <div class="container">
-        <div class="row">
-            <div class="col-sm-12 mt-5">
-                <h3 class="text-center">Active Orders</h3>
-                {% if items %}
-                <h4 class="text-center">Total Bill Amount: {{total}} for {{ count }} Dishes.</h4>
-                <h6 class="text-center">Please pay either via PayTM or Net Banking or at time of delivery!</h6>
-                <div class="table-responsive">
-                    <table class="table table-light">
-                        <thead>
-                        <tr>
-                            <th scope="col">Ordered</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Specification</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Order Status</th>
-                        </tr>
+        
+        {# Page heading #}
+        <h1 class="text-center text-light mb-5 pt-3">
+            {# Orders icon #}
+            📋 Your Orders
+        </h1>
+
+        {# ===== SECTION 1: ACTIVE ORDERS ===== #}
+        <div class="mb-5">
+            
+            {# Active orders section heading #}
+            <h2 class="text-light mb-4">
+                <i class="fa fa-hourglass-half text-warning"></i> Active Orders (In Progress)
+            </h2>
+
+            {# Check if user has active orders #}
+            {% if items %}
+                
+                {# Order summary cards row #}
+                <div class="row mb-4">
+                    {# Total bill amount card #}
+                    <div class="col-md-6 mb-3">
+                        <div class="card border-0 shadow-sm h-100" 
+                             style="background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);">
+                            <div class="card-body">
+                                <h5 class="card-title text-white mb-2">
+                                    <i class="fa fa-money"></i> Total Bill Amount
+                                </h5>
+                                <h3 class="text-white fw-bold">Ksh {{ total }}</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    {# Number of dishes card #}
+                    <div class="col-md-6 mb-3">
+                        <div class="card border-0 shadow-sm h-100" 
+                             style="background: linear-gradient(135deg, #FF8C42 0%, #FF6B35 100%);">
+                            <div class="card-body">
+                                <h5 class="card-title text-white mb-2">
+                                    <i class="fa fa-boxes"></i> Number of Dishes
+                                </h5>
+                                <h3 class="text-white fw-bold">{{ count }} 🍜</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {# Payment instruction alert #}
+                <div class="alert alert-info alert-dismissible fade show border-0 rounded shadow-sm mb-4" role="alert">
+                    <h5 class="alert-heading">
+                        <i class="fa fa-credit-card"></i> Payment Information
+                    </h5>
+                    <p class="mb-0">
+                        💳 You can pay via <strong>PayTM</strong>, <strong>Net Banking</strong>, or <strong>at the time of delivery</strong>
+                    </p>
+                </div>
+
+                {# Active orders table #}
+                <div class="table-responsive rounded shadow-sm mb-4">
+                    <table class="table table-hover mb-0">
+                        
+                        {# Table header #}
+                        <thead class="table-dark">
+                            <tr class="align-middle">
+                                {# Ordered date column header #}
+                                <th scope="col" class="py-3">
+                                    <i class="fa fa-calendar text-info"></i> Ordered On
+                                </th>
+                                
+                                {# Item name column header #}
+                                <th scope="col" class="py-3">
+                                    <i class="fa fa-cutlery text-warning"></i> Item Name
+                                </th>
+                                
+                                {# Description column header #}
+                                <th scope="col" class="py-3">
+                                    <i class="fa fa-info-circle"></i> Description
+                                </th>
+                                
+                                {# Price column header #}
+                                <th scope="col" class="py-3">
+                                    <i class="fa fa-money text-success"></i> Price
+                                </th>
+                                
+                                {# Quantity column header #}
+                                <th scope="col" class="py-3">
+                                    <i class="fa fa-boxes text-primary"></i> Qty
+                                </th>
+                                
+                                {# Order status column header #}
+                                <th scope="col" class="py-3">
+                                    <i class="fa fa-truck text-danger"></i> Status
+                                </th>
+                            </tr>
                         </thead>
+
+                        {# Table body with active orders #}
                         <tbody>
+                            {# Loop through each active order #}
                             {% for item_active in items %}
-                        <tr>
-                            <td>{{ item_active.ordered_date }}</td>
-                            <td>{{ item_active.item.title }} <span class="badge badge-{{ item_active.item.label_colour }}">{{ item_active.item.labels }}</span></td>
-                            <td>{{ item_active.item.description }}</td>
-                            <td>{{ item_active.item.instructions }}</td>
-                            <td>{{ item_active.item.price }}</td>
-                            <td>{{ item_active.item.pieces }} Quantity</td>
-                            <td>{{ item_active.status }}</td>
-                        </tr>
+                            
+                            <tr class="align-middle border-bottom">
+                                {# Ordered date cell #}
+                                <td class="py-3">
+                                    <span class="badge bg-info">
+                                        {{ item_active.ordered_date|date:"M d, Y" }}
+                                    </span>
+                                </td>
+                                
+                                {# Item name cell with badge #}
+                                <td class="py-3">
+                                    <strong class="text-light">{{ item_active.item.title }}</strong>
+                                    {# Label badge #}
+                                    <span class="badge badge-{{ item_active.item.label_colour }} ml-2">
+                                        {{ item_active.item.labels }}
+                                    </span>
+                                </td>
+                                
+                                {# Item description cell #}
+                                <td class="py-3 text-muted">
+                                    {{ item_active.item.description }}
+                                </td>
+                                
+                                {# Item price cell #}
+                                <td class="py-3">
+                                    <strong class="text-success">Ksh {{ item_active.item.price }}</strong>
+                                </td>
+                                
+                                {# Item quantity cell #}
+                                <td class="py-3">
+                                    <span class="badge bg-primary">
+                                        {{ item_active.item.pieces }} pcs
+                                    </span>
+                                </td>
+                                
+                                {# Order status cell with status badge #}
+                                <td class="py-3">
+                                    {# Dynamic status badge - changes color based on status #}
+                                    {% if item_active.status == "Pending" %}
+                                        <span class="badge bg-warning">⏳ {{ item_active.status }}</span>
+                                    {% elif item_active.status == "In Transit" %}
+                                        <span class="badge bg-info">🚚 {{ item_active.status }}</span>
+                                    {% elif item_active.status == "Delivered" %}
+                                        <span class="badge bg-success">✅ {{ item_active.status }}</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">📦 {{ item_active.status }}</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
-                {% else %}
-                <h4 class="text-center">Sorry, you have not ordered any item yet!!!</h4>
-                {% endif %}
+
+            {# Message when no active orders #}
+            {% else %}
+            
+            <div class="alert alert-info alert-dismissible fade show border-0 rounded shadow-sm" role="alert">
+                <h4 class="alert-heading">
+                    <i class="fa fa-info-circle"></i> No Active Orders
+                </h4>
+                <p class="mb-0">
+                    😊 You don't have any active orders right now. Start by exploring our menu and placing your first order!
+                </p>
             </div>
+            
+            {% endif %}
         </div>
 
-        <div class="row">
-            <div class="col-sm-12 mt-5">
-                <h3 class="text-center">Past Orders</h3>
-                {% if cart_items %}
-                <div class="table-responsive">
-                    <table class="table table-light">
-                        <thead>
-                        <tr>
-                            <th scope="col">Ordered</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Specification</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Order Status</th>
-                            <th scope="col">Delivery Date</th>
-                        </tr>
+        {# ===== SECTION 2: PAST ORDERS ===== #}
+        <div class="mb-5">
+            
+            {# Past orders section heading #}
+            <h2 class="text-light mb-4">
+                <i class="fa fa-history text-success"></i> Past Orders (Completed)
+            </h2>
+
+            {# Check if user has past orders #}
+            {% if cart_items %}
+                
+                {# Past orders table #}
+                <div class="table-responsive rounded shadow-sm">
+                    <table class="table table-hover mb-0">
+                        
+                        {# Table header #}
+                        <thead class="table-dark">
+                            <tr class="align-middle">
+                                {# Ordered date column header #}
+                                <th scope="col" class="py-3">
+                                    <i class="fa fa-calendar text-info"></i> Ordered On
+                                </th>
+                                
+                                {# Item name column header #}
+                                <th scope="col" class="py-3">
+                                    <i class="fa fa-cutlery text-warning"></i> Item Name
+                                </th>
+                                
+                                {# Description column header #}
+                                <th scope="col" class="py-3">
+                                    <i class="fa fa-info-circle"></i> Description
+                                </th>
+                                
+                                {# Price column header #}
+                                <th scope="col" class="py-3">
+                                    <i class="fa fa-money text-success"></i> Price
+                                </th>
+                                
+                                {# Quantity column header #}
+                                <th scope="col" class="py-3">
+                                    <i class="fa fa-boxes text-primary"></i> Qty
+                                </th>
+                                
+                                {# Order status column header #}
+                                <th scope="col" class="py-3">
+                                    <i class="fa fa-check-circle text-success"></i> Status
+                                </th>
+                                
+                                {# Delivery date column header #}
+                                <th scope="col" class="py-3">
+                                    <i class="fa fa-calendar-check text-danger"></i> Delivered On
+                                </th>
+                            </tr>
                         </thead>
+
+                        {# Table body with past orders #}
                         <tbody>
+                            {# Loop through each past/completed order #}
                             {% for cart in cart_items %}
-                        <tr>
-                            <td>{{ cart.ordered_date }}</td>
-                            <td>{{ cart.item.title }} <span class="badge badge-{{ cart.item.label_colour }}">{{ cart.item.labels }}</span></td>
-                            <td>{{ cart.item.description }}</td>
-                            <td>{{ cart.item.instructions }}</td>
-                            <td>{{ cart.item.price }}</td>
-                            <td>{{ cart.item.pieces }} Quantity</td>
-                            <td>{{ cart.status }}</td>
-                            <td>{{ cart.delivery_date }}</td>
-                        </tr>
+                            
+                            <tr class="align-middle border-bottom">
+                                {# Ordered date cell - formatted to readable date #}
+                                <td class="py-3">
+                                    <span class="badge bg-secondary">
+                                        {{ cart.ordered_date|date:"M d, Y" }}
+                                    </span>
+                                </td>
+                                
+                                {# Item name cell with label badge #}
+                                <td class="py-3">
+                                    <strong class="text-light">{{ cart.item.title }}</strong>
+                                    {# Label badge with dynamic color #}
+                                    <span class="badge badge-{{ cart.item.label_colour }} ml-2">
+                                        {{ cart.item.labels }}
+                                    </span>
+                                </td>
+                                
+                                {# Item description cell #}
+                                <td class="py-3 text-muted">
+                                    {{ cart.item.description }}
+                                </td>
+                                
+                                {# Item price cell in success color #}
+                                <td class="py-3">
+                                    <strong class="text-success">Ksh {{ cart.item.price }}</strong>
+                                </td>
+                                
+                                {# Item quantity cell with badge #}
+                                <td class="py-3">
+                                    <span class="badge bg-primary">
+                                        {{ cart.item.pieces }} pcs
+                                    </span>
+                                </td>
+                                
+                                {# Order status cell - should be "Delivered" for past orders #}
+                                <td class="py-3">
+                                    <span class="badge bg-success">✅ {{ cart.status }}</span>
+                                </td>
+                                
+                                {# Delivery date cell - formatted to readable date #}
+                                <td class="py-3">
+                                    <span class="badge bg-success">
+                                        {{ cart.delivery_date|date:"M d, Y" }}
+                                    </span>
+                                </td>
+                            </tr>
+                            
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
-                {% else %}
-                <h4 class="text-center">Sorry, you have not ordered any item yet!!!</h4>
-                {% endif %}
+
+            {# Message when no past orders #}
+            {% else %}
+            
+            <div class="alert alert-info alert-dismissible fade show border-0 rounded shadow-sm" role="alert">
+                <h4 class="alert-heading">
+                    <i class="fa fa-inbox"></i> No Past Orders
+                </h4>
+                <p class="mb-0">
+                    📦 You haven't completed any orders yet. Place your first order to see your order history here!
+                </p>
             </div>
+            
+            {% endif %}
+        </div>
+
+        {# Return to menu button at bottom #}
+        <div class="text-center mt-5 pb-5">
+            <a href="/" class="btn btn-primary btn-lg fw-bold">
+                <i class="fa fa-arrow-left"></i> Back to Menu
+            </a>
         </div>
     </div>
 </div>
+
 {% endblock content %}

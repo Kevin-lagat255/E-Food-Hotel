@@ -1,54 +1,221 @@
-{% extends "main/layout.html" %}
+{# Extend the base layout template #}
+{% extends "main/landing_page.html" %}
+
+{# Override content block #}
 {% block content %}
-<div class="cart">
+
+{# Main cart page section with dark background #}
+<div class="cart bg-dark min-vh-100 py-5">
+    
+    {# Responsive container for content #}
     <div class="container">
+        
+        {# Page heading #}
+        <h1 class="text-center text-light mb-5 pt-3">
+            {# Shopping cart icon #}
+            🛒 Your Shopping Cart
+        </h1>
+
+        {# Row for two-column layout: cart items (left) and order summary (right) #}
         <div class="row">
-            <div class="col-sm-9 mt-5">
-                <h3 class="text-center">Your Cart</h3>
+            
+            {# Left column: Cart items table - 9 cols on large, 8 on medium #}
+            <div class="col-lg-9 col-md-8 mb-4">
+                
+                {# Check if cart has items #}
                 {% if cart_items %}
-                <div class="table-responsive">
-                    <table class="table table-light">
-                        <thead>
-                        <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Specification</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col"></th>
-                        </tr>
+                
+                {# Responsive table container #}
+                <div class="table-responsive rounded shadow-sm">
+                    {# Cart items display table with hover effects #}
+                    <table class="table table-hover mb-0">
+                        
+                        {# Table header with dark background #}
+                        <thead class="table-dark">
+                            <tr class="align-middle">
+                                {# Item name column header #}
+                                <th scope="col" class="py-3">
+                                    <i class="fa fa-cutlery text-warning"></i> Item Name
+                                </th>
+                                
+                                {# Item description column header #}
+                                <th scope="col" class="py-3">
+                                    <i class="fa fa-info-circle text-info"></i> Description
+                                </th>
+                                
+                                {# Price column header #}
+                                <th scope="col" class="py-3">
+                                    <i class="fa fa-money text-success"></i> Price
+                                </th>
+                                
+                                {# Quantity column header #}
+                                <th scope="col" class="py-3">
+                                    <i class="fa fa-boxes text-primary"></i> Qty
+                                </th>
+                                
+                                {# Action column header #}
+                                <th scope="col" class="py-3">
+                                    <i class="fa fa-cog text-danger"></i> Action
+                                </th>
+                            </tr>
                         </thead>
+
+                        {# Table body with cart items #}
                         <tbody>
+                            {# Loop through each item in the cart #}
                             {% for cart in cart_items %}
-                        <tr>
-                            <td>{{ cart.item.title }} <span class="badge badge-{{ cart.item.label_colour }}">{{ cart.item.labels }}</span></td>
-                            <td>{{ cart.item.description }}</td>
-                            <td>{{ cart.item.instructions }}</td>
-                            <td>{{ cart.item.price }}</td>
-                            <td>{{ cart.item.pieces }} Q</td>
-                            <td><a class="btn btn-danger" href="{% url 'main:remove-from-cart' cart.id %}">Delete😢</a></td>
-                        </tr>
+                            
+                            {# Cart item row with hover effect #}
+                            <tr class="align-middle border-bottom">
+                                
+                                {# Item name cell with badge #}
+                                <td class="py-3">
+                                    {# Item title in bold #}
+                                    <strong class="text-light">{{ cart.item.title }}</strong> 
+                                    {# Special category badge with dynamic color #}
+                                    <span class="badge badge-{{ cart.item.label_colour }} ml-2">
+                                        {{ cart.item.labels }}
+                                    </span>
+                                </td>
+
+                                {# Item description cell #}
+                                <td class="py-3 text-muted">
+                                    {{ cart.item.description }}
+                                </td>
+
+                                {# Item price cell with success color #}
+                                <td class="py-3">
+                                    <strong class="text-success fs-5">
+                                        💵 Ksh {{ cart.item.price }}
+                                    </strong>
+                                </td>
+
+                                {# Item quantity cell #}
+                                <td class="py-3">
+                                    <span class="badge badge-info">
+                                        {{ cart.item.pieces }} pcs
+                                    </span>
+                                </td>
+
+                                {# Delete from cart button cell #}
+                                <td class="py-3">
+                                    {# Remove button with hover animation #}
+                                    <a class="btn btn-sm btn-danger text-white" 
+                                       href="{% url 'main:remove-from-cart' cart.id %}"
+                                       title="Remove item from cart">
+                                        {# Trash icon #}
+                                        <i class="fa fa-trash"></i> Remove
+                                    </a>
+                                </td>
+                            </tr>
+                            
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
+
+                {# Empty cart message - shown when no items in cart #}
                 {% else %}
-                <h4 class="text-center">Sorry, your cart is empty..Please add items!!!</h4>
+                
+                <div class="alert alert-warning alert-dismissible fade show border-0 rounded shadow-sm" role="alert">
+                    {# Alert heading with icon #}
+                    <h4 class="alert-heading mb-3">
+                        <i class="fa fa-shopping-basket"></i> Your Cart is Empty
+                    </h4>
+                    
+                    {# Message explaining empty cart #}
+                    <p class="mb-3">
+                        😕 Your shopping cart is currently empty. Start exploring our delicious menu and add your favorite items!
+                    </p>
+                    
+                    {# Link to browse dishes #}
+                    <a href="/" class="btn btn-primary">
+                        <i class="fa fa-arrow-left"></i> Back to Menu
+                    </a>
+                </div>
+                
                 {% endif %}
             </div>
-            <div class="col-sm-3 mt-5 mb-3">
-                <div class="content-section">
-                    <h3 class="text-center">Order Summary</h3>
-                      <ul class="list-group">
-                        <li class="list-group-item list-group-item-light text-center text-dark">Total: {{ total }}🤑</li>
-                        <li class="list-group-item list-group-item-light text-center text-dark">Number of dishes: {{ count }}📦</li>
-                        <li class="list-group-item list-group-item-light text-center text-dark">Total Quantity: {{ total_pieces }}🍣</li>
-                        <li class="list-group-item list-group-item-light text-center text-dark"><a class="btn btn-info text-dark" href="{% url 'main:ordered' %}">Proceed To Checkout🤝</a></li>
-                        <li class="list-group-item list-group-item-light text-center"><a class="btn btn-warning text-dark" href="/">Continue Buying✌️</a></li>
-                      </ul>
+
+            {# Right column: Order Summary Sidebar - 3 cols on large, 4 on medium #}
+            <div class="col-lg-3 col-md-4 mb-4">
+                
+                {# Order summary card with gradient header #}
+                <div class="card border-0 shadow-lg h-100">
+                    
+                    {# Summary header with gradient background #}
+                    <div class="card-header bg-gradient" 
+                         style="background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%); border-radius: 0.5rem 0.5rem 0 0;">
+                        <h4 class="mb-0 text-white fw-bold">
+                            {# Receipt icon #}
+                            <i class="fa fa-receipt"></i> Order Summary
+                        </h4>
+                    </div>
+
+                    {# Summary content #}
+                    <div class="card-body bg-light">
+                        {# Summary details as list group #}
+                        <ul class="list-group list-group-flush">
+                            
+                            {# Total price summary item #}
+                            <li class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-bottom pb-3">
+                                <span class="text-dark fw-semibold">
+                                    {# Price icon #}
+                                    <i class="fa fa-money text-success"></i> Total Price:
+                                </span>
+                                {# Display total amount with badge #}
+                                <span class="badge bg-success badge-pill fs-6">
+                                    Ksh {{ total|default:"0" }}
+                                </span>
+                            </li>
+
+                            {# Number of dishes summary item #}
+                            <li class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-bottom py-3">
+                                <span class="text-dark fw-semibold">
+                                    {# Box icon #}
+                                    <i class="fa fa-boxes text-info"></i> No. of Dishes:
+                                </span>
+                                {# Display count of dishes #}
+                                <span class="badge bg-info badge-pill fs-6">
+                                    {{ count|default:"0" }} 📦
+                                </span>
+                            </li>
+
+                            {# Total quantity summary item #}
+                            <li class="list-group-item d-flex justify-content-between align-items-center bg-transparent py-3">
+                                <span class="text-dark fw-semibold">
+                                    {# Quantity icon #}
+                                    <i class="fa fa-star text-warning"></i> Total Qty:
+                                </span>
+                                {# Display total pieces #}
+                                <span class="badge bg-warning badge-pill fs-6">
+                                    {{ total_pieces|default:"0" }} 🍣
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    {# Action buttons footer #}
+                    <div class="card-footer bg-white border-top-0">
+                        {# Checkout button - only show if cart has items #}
+                        {% if cart_items %}
+                        <a class="btn btn-success btn-block mb-2 fw-bold text-white" 
+                           href="{% url 'main:ordered' %}">
+                            {# Handshake icon for checkout #}
+                            <i class="fa fa-handshake-o"></i> Proceed to Checkout
+                        </a>
+                        {% endif %}
+
+                        {# Continue shopping button #}
+                        <a class="btn btn-outline-primary btn-block fw-bold" href="/">
+                            {# Back arrow icon #}
+                            <i class="fa fa-arrow-left"></i> Continue Shopping
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 {% endblock content %}

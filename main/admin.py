@@ -3,6 +3,7 @@ from .models import Item, CartItems, Reviews
 from django.db import models
 
 class ItemAdmin(admin.ModelAdmin):
+    # Organize fields into sections for better admin interface
     fieldsets = [
         ("Created By", {'fields': ["created_by"]}),
         ("Title", {'fields': ["title"]}),
@@ -15,6 +16,13 @@ class ItemAdmin(admin.ModelAdmin):
         ("Label Colour", {'fields': ["label_colour"]}),
         ("Slug", {'fields': ["slug"]}),
     ]
+    
+    # Auto-generate slug from title as admin types
+    prepopulated_fields = {
+        'slug': ('title',)  # Slug auto-fills from title field
+    }
+    
+    # Display columns in list view
     list_display = ('id','created_by','title','description','price','labels')
 
 class CartItemsAdmin(admin.ModelAdmin):

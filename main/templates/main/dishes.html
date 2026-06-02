@@ -1,61 +1,280 @@
-{% extends "main/layout.html" %}
-{% block content %}
-<div class="dishes">
-    <!--Main layout-->
-  <main class="mt-3 pt-4 main">
-    <div class="container dark-grey-text">
-      <div class="row wow fadeIn">
-        <div class="col-md-6 mb-4">
-          <img src="{{ item.image.url }}" class="img-fluid mt-4" alt="">
-        </div>
-        <div class="col-md-6 mb-4 information">
-          <!--Content-->
-          <div class="p-4 content">
-            <div class="mt-0">
-                <h2><u>{{ item.title }}</u><span class="badge badge-{{ item.label_colour }} ml-2">{{ item.labels }}</span></h2>
-            </div>
-            <div class="lead">
-              {% if item.description %}
-              <h5>{{ item.description }}</h5>
-              {% endif %}
-              <h3>₹ {{ item.price }} for {{ item.pieces}} dish</h3>
-              <h4>{{ item.instructions }}</h4>
-            </div>
-            <a href="{% url 'main:add-to-cart' item.slug %}" class="btn btn-primary btn-md my-0 p">Add to cart</a>
-          </div>
-        </div>
-      </div>
-      <hr>
-    </div>
-  </main>
-  <div class="container">
-    <h1 class="text-center">Reviews</h1>
-    
-    <form action="{% url 'main:add_reviews' %}" method="POST" class="mb-3">
-      {% csrf_token %}
-      <div class="row">
-        <div class="col-sm-11">
-          <input type="text" name="review" class="form-control" placeholder="Enter Your Review">
-          <input type="hidden" name="rslug" class="form-control" value="{{item.slug}}">
-        </div>
-        <div class="col-sm-1">
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-      </div>
-    </form>
+{# Extend the base landing page template for consistent modern styling #}
+{% extends "main/landing_page.html" %}
 
-    {% for review in reviews %}
-    <div class="main-reviews card bg-success mb-3">
-      <div class="card-body">
-        <div class="user_details" style="display: flex; border-bottom: 1px solid rgb(31, 30, 30);">
-          <h3 class="mr-3">{{ review.user.username }} </h3>
-          <p class="mt-2">{{ review.posted_on }}</p>
-        </div>
-          <h4>{{ review.review }}</h4>
-      </div>
-    </div>
-    {% endfor %}
+{# Override content block #}
+{% block content %}
+
+{# Main dishes detail page section with dark background #}
+<div class="dishes bg-dark min-vh-100 py-5">
     
-  </div>
+    {# Responsive container for content #}
+    <div class="container">
+        
+        {# ===== SECTION 1: DISH DETAILS ===== #}
+        {# Fade in animation on scroll #}
+        <div class="row wow fadeIn mb-5">
+            
+            {# Left column - dish image with shadow #}
+            <div class="col-lg-6 col-md-12 mb-4">
+                {# Image container with rounded corners and shadow #}
+                <div class="position-relative overflow-hidden rounded shadow-lg" style="border-radius: 1rem;">
+                    {# Dish image with responsive sizing and cover effect #}
+                    <img src="{{ item.image.url }}" 
+                         class="img-fluid w-100" 
+                         alt="{{ item.title }}"
+                         style="height: 450px; object-fit: cover; transition: transform 0.3s ease;">
+                    
+                    {# Special label badge overlay on image #}
+                    <span class="badge badge-{{ item.label_colour }} position-absolute" 
+                          style="top: 15px; right: 15px; font-size: 0.9rem; padding: 8px 12px;">
+                        {{ item.labels }}
+                    </span>
+                </div>
+            </div>
+
+            {# Right column - dish information and details #}
+            <div class="col-lg-6 col-md-12 mb-4">
+                
+                {# Dish details card with modern styling #}
+                <div class="card border-0 shadow-lg h-100" 
+                     style="background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);">
+                    
+                    {# Card body with padding #}
+                    <div class="card-body p-4">
+                        
+                        {# Dish title section #}
+                        <div class="mb-4 pb-3 border-bottom border-secondary">
+                            {# Main heading - dish name #}
+                            <h1 class="text-light mb-2 fw-bold">
+                                {# Fork and knife emoji #}
+                                🍽️ {{ item.title }}
+                            </h1>
+                            {# Subtitle with description if available #}
+                            {% if item.description %}
+                            <p class="text-muted mb-0">{{ item.description }}</p>
+                            {% endif %}
+                        </div>
+
+                        {# Price and quantity section #}
+                        <div class="mb-4 p-3 rounded" 
+                             style="background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);">
+                            {# Price heading #}
+                            <h3 class="text-white fw-bold mb-2">
+                                💵 Price: Ksh {{ item.price }}
+                            </h3>
+                            {# Quantity info #}
+                            <p class="text-white mb-0">
+                                <i class="fa fa-cubes"></i> 
+                                <strong>Quantity per order:</strong> {{ item.pieces }} pieces
+                            </p>
+                        </div>
+
+                        {# Special instructions section if available #}
+                        {% if item.instructions %}
+                        <div class="mb-4 p-3 rounded border border-info">
+                            {# Instructions heading #}
+                            <h5 class="text-info mb-2">
+                                <i class="fa fa-lightbulb-o"></i> Special Instructions
+                            </h5>
+                            {# Instructions text #}
+                            <p class="text-light mb-0">{{ item.instructions }}</p>
+                        </div>
+                        {% endif %}
+
+                        {# Nutritional/dietary info section #}
+                        <div class="mb-4">
+                            {# Info heading #}
+                            <h5 class="text-light mb-3">
+                                <i class="fa fa-info-circle text-warning"></i> About This Dish
+                            </h5>
+                            {# Info list with icons #}
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <span class="badge bg-success">✓</span>
+                                    <span class="text-light ms-2">Fresh, quality ingredients</span>
+                                </li>
+                                <li class="mb-2">
+                                    <span class="badge bg-success">✓</span>
+                                    <span class="text-light ms-2">Freshly prepared daily</span>
+                                </li>
+                                <li class="mb-2">
+                                    <span class="badge bg-success">✓</span>
+                                    <span class="text-light ms-2">Authentic recipe</span>
+                                </li>
+                                <li>
+                                    <span class="badge bg-success">✓</span>
+                                    <span class="text-light ms-2">Perfect for all occasions</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        {# Action buttons section #}
+                        <div class="d-grid gap-2">
+                            {# Add to cart button - primary action #}
+                            <a href="{% url 'main:add-to-cart' item.slug %}" 
+                               class="btn btn-lg fw-bold text-white" 
+                               style="background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%); transition: transform 0.2s;"
+                               onmouseover="this.style.transform='scale(1.02)'"
+                               onmouseout="this.style.transform='scale(1)'">
+                                {# Shopping cart icon #}
+                                <i class="fa fa-shopping-cart"></i> Add to Cart - Ksh {{ item.price }}
+                            </a>
+
+                            {# Back to menu button - secondary action #}
+                            <a href="{% url 'main:home' %}" 
+                               class="btn btn-lg btn-outline-light fw-bold">
+                                {# Back arrow icon #}
+                                <i class="fa fa-arrow-left"></i> Back to Menu
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# ===== SECTION 2: REVIEWS ===== #}
+        <div class="mt-5 pt-4">
+            
+            {# Reviews section heading #}
+            <h2 class="text-light mb-4 text-center">
+                <i class="fa fa-star text-warning"></i> Customer Reviews & Feedback
+            </h2>
+
+            {# Add review form card #}
+            <div class="card border-0 shadow-lg mb-5" style="background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);">
+                
+                {# Form header with gradient background #}
+                <div class="card-header border-0" 
+                     style="background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);">
+                    <h5 class="mb-0 text-white fw-bold">
+                        {# Pencil/edit icon #}
+                        <i class="fa fa-pencil"></i> Share Your Experience
+                    </h5>
+                </div>
+
+                {# Review form #}
+                <form action="{% url 'main:add_reviews' %}" method="POST" class="card-body">
+                    {# CSRF token for security #}
+                    {% csrf_token %}
+
+                    {# Form row with input and button #}
+                    <div class="row g-2">
+                        
+                        {# Review text input column #}
+                        <div class="col-sm-10">
+                            {# Text input for review content with placeholder #}
+                            <input type="text" 
+                                   name="review" 
+                                   class="form-control form-control-lg" 
+                                   placeholder="💭 What do you think about this dish? Your feedback helps others!"
+                                   required
+                                   style="background-color: #333; color: #fff; border-color: #555;">
+                            
+                            {# Hidden input to store dish slug for backend processing #}
+                            <input type="hidden" 
+                                   name="rslug" 
+                                   value="{{item.slug}}">
+                        </div>
+
+                        {# Submit button column #}
+                        <div class="col-sm-2">
+                            {# Submit button with gradient background #}
+                            <button type="submit" 
+                                    class="btn btn-lg fw-bold w-100 text-white"
+                                    style="background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);">
+                                {# Send icon #}
+                                <i class="fa fa-send"></i> Post
+                            </button>
+                        </div>
+                    </div>
+                    
+                    {# Helper text #}
+                    <small class="text-muted d-block mt-2">
+                        Share your thoughts to help other customers decide!
+                    </small>
+                </form>
+            </div>
+
+            {# Reviews list section #}
+            <div class="reviews-container">
+                
+                {# Check if reviews exist #}
+                {% if reviews %}
+                    
+                    {# Display count of reviews #}
+                    <div class="text-center mb-4">
+                        <span class="badge bg-info text-dark fs-6">
+                            {{ reviews|length }} Review{{ reviews|length|pluralize }}
+                        </span>
+                    </div>
+
+                    {# Loop through all reviews #}
+                    {% for review in reviews %}
+                    
+                    {# Individual review card with shadow #}
+                    <div class="card border-0 shadow-sm mb-3" 
+                         style="background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%); transition: transform 0.2s;"
+                         onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(255, 107, 53, 0.3)'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow=''">
+                        
+                        {# Review header with user and date info #}
+                        <div class="card-header border-bottom border-secondary" 
+                             style="background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);">
+                            {# Header content with flex layout #}
+                            <div class="d-flex justify-content-between align-items-center">
+                                {# User info on left #}
+                                <div>
+                                    {# User avatar circle #}
+                                    <div class="d-flex align-items-center">
+                                        {# User icon #}
+                                        <i class="fa fa-user-circle text-white" style="font-size: 1.5rem;"></i>
+                                        {# Username #}
+                                        <h5 class="mb-0 ms-2 text-white fw-bold">
+                                            {{ review.user.username }}
+                                        </h5>
+                                    </div>
+                                </div>
+                                
+                                {# Review date on right #}
+                                <small class="text-white">
+                                    {# Calendar icon and formatted date #}
+                                    <i class="fa fa-calendar"></i> 
+                                    {{ review.posted_on|date:"M d, Y H:i" }}
+                                </small>
+                            </div>
+                        </div>
+
+                        {# Review content/text #}
+                        <div class="card-body">
+                            {# Review text with light color #}
+                            <p class="card-text text-light mb-0">
+                                {# Quote mark icon #}
+                                <i class="fa fa-quote-left text-warning opacity-50"></i>
+                                {{ review.review }}
+                                <i class="fa fa-quote-right text-warning opacity-50"></i>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    {% endfor %}
+                
+                {# No reviews message #}
+                {% else %}
+                
+                <div class="alert alert-info alert-dismissible fade show border-0 rounded shadow-sm" role="alert">
+                    {# Empty state message with icon #}
+                    <h5 class="alert-heading">
+                        <i class="fa fa-comment-o"></i> No Reviews Yet
+                    </h5>
+                    <p class="mb-0">
+                        👆 Be the first to share your opinion! Your feedback helps other customers make great choices.
+                    </p>
+                </div>
+                
+                {% endif %}
+            </div>
+        </div>
+    </div>
 </div>
-{% endblock content %}
+
+{% endblock %}

@@ -1,330 +1,916 @@
 /*
-
-Template 2076 Zentro
-
-http://www.tooplate.com/view/2076-zentro
-
+  ===================================================
+  E-FOOD ORDERING SYSTEM - MODERN STYLESHEET
+  ===================================================
+  Modern, responsive design with enhanced UX/UI
+  Color Scheme: Orange (#FF6B35), White, Dark Gray
+  ===================================================
 */
 
-body
-	{
-		background: #ffffff;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 400;
-    position: relative;
-	}
+/* ===== GLOBAL BODY STYLES ===== */
+body {
+  /* Set default background to light gradient */
+  background: linear-gradient(135deg, #f5f7fa 0%, #f0f2f5 100%);
+  /* Use modern font stack for better readability */
+  font-family: 'Roboto', 'Segoe UI', sans-serif;
+  /* Set base font weight */
+  font-weight: 400;
+  /* Establish positioning context */
+  position: relative;
+  /* Set minimum height for full viewport coverage */
+  min-height: 100vh;
+  /* Smooth color transitions */
+  transition: all 0.3s ease;
+  /* Light gray text color */
+  color: #333333;
+}
 
+
+/* ===== TYPOGRAPHY STYLES ===== */
+/* Main heading styles */
 .heading {
-  font-size: 22px;
+  /* Large, bold text for main headings */
+  font-size: 32px;
+  /* Heavy font weight for prominence */
+  font-weight: 700;
+  /* Subtle letter spacing for elegance */
+  letter-spacing: 0.5px;
+  /* Dark color for contrast */
+  color: #2d3436;
+  /* Bottom margin for spacing */
+  margin-bottom: 20px;
+}
+
+/* Secondary heading styles */
+.subheading {
+  /* Medium font size */
+  font-size: 18px;
+  /* Moderate weight */
+  font-weight: 500;
+  /* Nice spacing below */
+  padding-bottom: 15px;
+  /* Light gray color for secondary text */
+  color: #636e72;
+}
+
+/* Paragraph text styles */
+p {
+  /* Gray text color for readability */
+  color: #555555;
+  /* Normal weight */
+  font-weight: 400;
+  /* Standard font size */
+  font-size: 16px;
+  /* Subtle letter spacing */
+  letter-spacing: 0.3px;
+  /* Increased line height for better readability */
+  line-height: 28px;
+}
+
+/* Divider/separator line styles */
+hr {
+  /* Solid border with modern color */
+  border-top: 2px solid #dfe6e9;
+  /* Set standard width */
+  width: 80px;
+  /* Margin for spacing */
+  margin: 20px auto;
+}
+
+/* Menu, gallery, and team section spacing */
+#menu, #gallery, #team {
+  /* Top padding for vertical space */
+  padding-top: 80px;
+  /* Bottom padding for spacing */
+  padding-bottom: 80px;
+}
+
+/* Menu and contact section backgrounds */
+#menu, #contact {
+  /* Light background for contrast */
+  background: #f8f9fa;
+}
+
+/* Parallax section styles */
+.parallax-section {
+  /* Enable parallax effect with fixed attachment */
+  background-attachment: fixed !important;
+  /* Ensure background covers full area */
+  background-size: cover !important;
+  /* Center background position */
+  background-position: center !important;
+  /* Smooth transitions */
+  transition: all 0.5s ease;
+}
+
+
+/* ===== PRELOADER STYLES ===== */
+/* Fixed overlay that covers entire screen */
+.preloader {
+  /* Fixed positioning to stay visible during page load */
+  position: fixed;
+  /* Position at top-left corner */
+  top: 0;
+  left: 0;
+  /* Cover full viewport width */
+  width: 100%;
+  /* Cover full viewport height */
+  height: 100%;
+  /* High z-index to appear on top of all content */
+  z-index: 99999;
+  /* Use flexbox for centered content */
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  /* Arrange items horizontally without wrapping */
+  -webkit-flex-flow: row nowrap;
+  -ms-flex-flow: row nowrap;
+  flex-flow: row nowrap;
+  /* Center items horizontally */
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  /* Center items vertically */
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  /* Semi-transparent white background */
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* Spinner animation element */
+.sk-spinner-pulse {
+  /* Set spinner width */
+  width: 50px;
+  /* Set spinner height for square shape */
+  height: 50px;
+  /* Modern orange background color */
+  background-color: #FF6B35;
+  /* Create circular shape */
+  border-radius: 100%;
+  /* Apply pulse animation with 1s duration */
+  -webkit-animation: sk-pulseScaleOut 1s infinite ease-in-out;
+  animation: sk-pulseScaleOut 1s infinite ease-in-out;
+  /* Add box shadow for depth */
+  box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+}
+
+/* Webkit animation for older browsers */
+@-webkit-keyframes sk-pulseScaleOut {
+  /* Starting state - small and opaque */
+  0% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+    opacity: 1;
+  }
+  /* Ending state - full size and transparent */
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+/* Standard animation for modern browsers */
+@keyframes sk-pulseScaleOut {
+  /* Starting state - small and opaque */
+  0% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+    opacity: 1;
+  }
+  /* Ending state - full size and transparent */
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+
+
+/* ===== NAVIGATION BAR STYLES ===== */
+/* Main navigation bar container */
+.navbar-default {
+  /* White background with subtle shadow */
+  background: #ffffff;
+  /* Modern box shadow for depth */
+  box-shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.08);
+  /* Remove default border */
+  border: none;
+  /* Remove bootstrap default margin */
+  margin-bottom: 0;
+  /* Smooth transitions for hover effects */
+  transition: all 0.3s ease;
+}
+
+/* Navbar brand and links line height */
+.navbar-brand, .navbar-nav li a {
+  /* Standard line height for alignment */
+  line-height: 28px;
+  /* Smooth color transitions */
+  transition: color 0.3s ease;
+}
+
+/* Navbar brand (logo) styles */
+.navbar-default .navbar-brand {
+  /* Dark gray text for visibility */
+  color: #FF6B35;
+  /* Larger font for prominence */
+  font-size: 24px;
+  /* Bold weight for emphasis */
+  font-weight: 700;
+  /* Spaced out letters for elegance */
+  letter-spacing: 1.2px;
+  /* No text decoration */
+  text-decoration: none;
+}
+
+/* Hover effect for logo */
+.navbar-default .navbar-brand:hover {
+  /* Slightly darker on hover */
+  color: #E55A2D;
+  /* Add scale animation */
+  transform: scale(1.05);
+}
+
+/* Navigation links styles */
+.navbar-default .navbar-nav li a {
+  /* Smaller, elegant font size */
+  font-size: 14px;
+  /* Letter spacing for sophistication */
+  letter-spacing: 0.8px;
+  /* Dark gray color */
+  color: #2d3436;
+  /* Add hover transition */
+  transition: all 0.3s ease;
+}
+
+/* Hover effect for navigation links */
+.navbar-default .navbar-nav li a:hover {
+  /* Orange color on hover */
+  color: #FF6B35;
+  /* Subtle transform for interactivity */
+  transform: translateY(-2px);
+}
+
+/* Logout button specific styles */
+.logout-link button {
+  /* Inherit link styling */
+  color: #2d3436;
+  /* Remove default button appearance */
+  background: none;
+  /* Remove border */
+  border: none;
+  /* Make cursor indicate clickability */
+  cursor: pointer;
+  /* Smooth transitions */
+  transition: all 0.3s ease;
+  /* Font weight to match links */
   font-weight: 500;
 }
 
-.subheading {
-  font-size: 16px;
-  padding-bottom: 60px;
+/* Logout button hover state */
+.logout-link button:hover {
+  /* Orange accent color */
+  color: #FF6B35;
+  /* Visual feedback */
+  transform: translateY(-2px);
 }
 
-p {
-  color: #848484;
-  font-weight: 400;
-  font-size: 16px;
-  letter-spacing: 0.4px;
-  line-height: 28px;
-}
 
-hr {
-	border-top: 2px solid #828282;
-	width: 120px;
-}
-
-#menu, #gallery, #team {
-	padding-top: 100px;
-	padding-bottom: 100px;
-}
-#menu, #contact {
-  background: #f0f0f0;
-}
-
-.parallax-section {
-  background-attachment: fixed !important;
-  background-size: cover !important;
-}
-
-/* preloader section */
-.preloader  {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 99999;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-flex-flow: row nowrap;
-            -ms-flex-flow: row nowrap;
-                flex-flow: row nowrap;
-        -webkit-justify-content: center;
-            -ms-flex-pack: center;
-                justify-content: center;
-        -webkit-align-items: center;
-            -ms-flex-align: center;
-                align-items: center;
-        background: none repeat scroll 0 0 #fff;
-    }
-.sk-spinner-pulse {
-  width: 40px;
-  height: 40px;
-  background-color: #F6D76B;
-  border-radius: 100%;
-  -webkit-animation: sk-pulseScaleOut 1s infinite ease-in-out;
-          animation: sk-pulseScaleOut 1s infinite ease-in-out; }
-
-@-webkit-keyframes sk-pulseScaleOut {
-  0% {
-    -webkit-transform: scale(0);
-            transform: scale(0); }
-  100% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-    opacity: 0; } }
-
-@keyframes sk-pulseScaleOut {
-  0% {
-    -webkit-transform: scale(0);
-            transform: scale(0); }
-  100% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-    opacity: 0; } }
-
-
-/* start navigation */
-.navbar-default {
-  background: #ffffff;
-  box-shadow: 0px 2px 8px 0px rgba(50, 50, 50, 0.04);
-  border: none;
-  margin-bottom: 0;
-}
-.navbar-brand, .navbar-nav li a {
-  line-height: 28px;
-}
-.navbar-default .navbar-brand  {
-  color: #5C5C5C;
-  font-size: 22px;
-  font-weight: bold;
-  letter-spacing: 2px;
-}
-.navbar-default .navbar-nav li a {
-  font-size: 12px;
-  letter-spacing: 1px;
-}
-
-/* home section */
+/* ===== HOME HERO SECTION STYLES ===== */
+/* Hero section background and layout */
 #home {
-  background: url('../images/home-bg.jpg') 50% 0 repeat-y fixed;
-  -webkit-background-size: cover;
+  /* Background image with fallback gradient */
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/home-bg.jpg') 50% center fixed;
+  /* Ensure background covers entire section */
   background-size: cover;
+  /* Center background position */
   background-position: center;
+  /* Set text color to white for contrast */
   color: #ffffff;
+  /* Use flexbox for centering */
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  /* Align content to center */
   -webkit-box-align: center;
   -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
-  height: 100vh;
+  -ms-flex-align: center;
+  align-items: center;
+  /* Center horizontally */
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  /* Set minimum height for impressive hero */
+  min-height: 600px;
+  /* Center text alignment */
   text-align: center;
+  /* Add gradient overlay for text readability */
+  position: relative;
 }
+
+/* Hero section heading */
 #home h1 {
-  font-size: 20px;
+  /* Large, bold font for impact */
+  font-size: 48px;
+  /* Increased letter spacing for elegance */
   letter-spacing: 8px;
+  /* Normal font style */
   font-style: normal;
-  padding-top: 10px;
-}
-#home .btn {
-  background: transparent;
-  border-radius: 0;
-  border: 3px solid #ffffff;
-  color: #ffffff;
-  font-weight: bold;
-  letter-spacing: 2px;
-  padding: 16px 42px;
-  margin-top: 40px;
-  transition: all 0.4s ease-in-out;
-}
-#home .btn:hover {
-  background: #ffffff;
-  color: #202020;
+  /* Top padding for spacing */
+  padding-top: 20px;
+  /* Add text shadow for readability over background */
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  /* Smooth animation */
+  animation: slideInDown 0.8s ease;
 }
 
-/* team section */
+/* Hero section secondary heading */
+#home h2 {
+  /* Smaller than h1 but still prominent */
+  font-size: 32px;
+  /* Medium weight */
+  font-weight: 500;
+  /* Letter spacing for elegance */
+  letter-spacing: 3px;
+  /* Light margin for spacing */
+  margin-top: 15px;
+  /* Text shadow for readability */
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  /* Animation with slight delay */
+  animation: slideInUp 0.8s ease 0.2s both;
+}
+
+/* Call-to-action button in hero */
+#home .btn {
+  /* Transparent background to show hero background */
+  background: transparent;
+  /* Remove border radius for modern look */
+  border-radius: 5px;
+  /* Thick white border */
+  border: 2px solid #ffffff;
+  /* White text */
+  color: #ffffff;
+  /* Bold letters */
+  font-weight: 700;
+  /* Letter spacing for elegance */
+  letter-spacing: 2px;
+  /* Padding for spacious button */
+  padding: 16px 42px;
+  /* Top margin for spacing from text */
+  margin-top: 40px;
+  /* Animation on hover */
+  transition: all 0.4s ease-in-out;
+  /* Cursor shows clickability */
+  cursor: pointer;
+}
+
+/* Button hover state */
+#home .btn:hover {
+  /* Fill button with white on hover */
+  background: #ffffff;
+  /* Change text to dark on hover */
+  color: #FF6B35;
+  /* Subtle scale animation */
+  transform: scale(1.05);
+  /* Add shadow on hover */
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+}
+
+/* Slide down animation for hero title */
+@keyframes slideInDown {
+  /* Starting position - above viewport */
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  /* Ending position - in place */
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Slide up animation for hero subtitle */
+@keyframes slideInUp {
+  /* Starting position - below viewport */
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  /* Ending position - in place */
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ===== TEAM SECTION STYLES ===== */
+/* Team section container */
 #team {
+  /* Center text alignment */
   text-align: center;
 }
+
+/* Team member name heading */
 #team h3 {
-  font-size: 18px;
+  /* Medium font size */
+  font-size: 20px;
+  /* Compact line height */
   line-height: 4px;
-}
-#team h4 {
-  color: #5C5C5C;
-  padding-top: 24px;
-}
-#team .col-md-4 {
- padding-top: 42px;
+  /* Weight for emphasis */
+  font-weight: 600;
 }
 
-/* menu section */
-#menu h4 {
-	line-height: 1.5;
+/* Team member position/details */
+#team h4 {
+  /* Gray color for secondary text */
+  color: #555555;
+  /* Padding for spacing */
+  padding-top: 24px;
+  /* Smooth transitions */
+  transition: all 0.3s ease;
 }
+
+/* Team member column styling */
+#team .col-md-4 {
+  /* Top padding for spacing */
+  padding-top: 42px;
+  /* Hover effect container */
+  transition: all 0.3s ease;
+}
+
+/* Team member hover effect */
+#team .col-md-4:hover h3 {
+  /* Orange color on hover */
+  color: #FF6B35;
+}
+
+/* ===== MENU SECTION STYLES ===== */
+/* Menu description and prices */
+#menu h4 {
+  /* Line height for readability */
+  line-height: 1.5;
+  /* Smooth transitions */
+  transition: all 0.3s ease;
+}
+
+/* Menu column sizing */
 #menu .col-md-8 {
+  /* Bottom padding for spacing */
   padding-bottom: 42px;
 }
+
+/* Half-width menu items */
 #menu .col-md-6 {
+  /* Bottom padding between items */
   padding-bottom: 18px;
-}
-#menu span {
-  color: #5C5C5C;
 }
 
-/* gallery section */
+/* Menu item span styling */
+#menu span {
+  /* Gray color for secondary info */
+  color: #636e72;
+  /* Font weight */
+  font-weight: 500;
+}
+
+/* ===== GALLERY SECTION STYLES ===== */
+/* Gallery section container */
 #gallery {
+  /* Top padding */
   padding-top: 80px;
+  /* Bottom padding */
   padding-bottom: 80px;
+  /* Light background */
+  background: #f8f9fa;
 }
+
+/* Gallery column styling */
 #gallery .col-md-4 {
+  /* Top padding for spacing */
   padding-top: 52px;
+  /* Hover effect transition */
+  transition: all 0.3s ease;
 }
+
+/* Gallery images */
 #gallery img {
+  /* Full width within container */
   width: 100%;
+  /* Bottom padding between items */
   padding-bottom: 18px;
+  /* Smooth hover transitions */
+  transition: all 0.3s ease;
+  /* Add border radius for modern look */
+  border-radius: 8px;
 }
+
+/* Hover effect for gallery images */
+#gallery img:hover {
+  /* Scale up on hover */
+  transform: scale(1.05);
+  /* Add shadow on hover */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Gallery item container */
 #gallery .col-md-4 div {
+  /* Position relative for layering */
   position: relative;
+  /* Bottom positioning */
   bottom: 18px;
+  /* Padding below */
   padding-bottom: 12px;
 }
+
+/* Gallery title */
 #gallery h3 {
-  font-size: 18px;
+  /* Title font size */
+  font-size: 20px;
+  /* Compact line height */
   line-height: 8px;
+  /* Font weight */
+  font-weight: 600;
 }
 
-/* contact section */
+/* ===== CONTACT SECTION STYLES ===== */
+/* Contact section background */
 #contact {
+  /* Top padding */
   padding-top: 80px;
+  /* Bottom padding */
   padding-bottom: 100px;
+  /* Light background for contrast */
+  background: #f8f9fa;
 }
+
+/* Contact text area padding */
 #contact .col-md-8 {
+  /* Bottom margin for spacing */
   margin-bottom: 32px;
 }
+
+/* Form control styling */
 #contact .form-control {
+  /* White background */
   background: #ffffff;
+  /* Remove default border */
   border: none;
+  /* Border bottom instead for modern look */
+  border-bottom: 2px solid #dfe6e9;
+  /* Remove border radius */
   border-radius: 0;
+  /* Remove box shadow */
   box-shadow: none;
+  /* Top margin */
   margin-top: 10px;
+  /* Bottom margin */
   margin-bottom: 10px;
-  transition: all 0.4s ease-in-out;
-}
-#contact .form-control:focus {
-  border-color: #f9f9f9;
-}
-#contact input {
-  height: 48px;
-}
-#contact input[type="submit"] {
-  background: transparent;
-  border: 2px solid #999;
-  border-radius: 10px;
-  letter-spacing: 2px;
-  margin-top: 12px;
-  height: 50px;
-}
-#contact input[type="submit"]:hover {
-  background: #999;
-  color: #ffffff;
+  /* Smooth transitions for focus states */
+  transition: all 0.3s ease;
+  /* Padding for spacing */
+  padding: 12px 0;
 }
 
-/* footer section */
+/* Focus state for form inputs */
+#contact .form-control:focus {
+  /* Orange border on focus */
+  border-bottom-color: #FF6B35;
+  /* Add subtle shadow */
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.1);
+  /* Light background change */
+  background: #fafbfc;
+}
+
+/* Input field height */
+#contact input {
+  /* Make inputs taller for better touch targets */
+  height: 48px;
+}
+
+/* Submit button styling */
+#contact input[type="submit"] {
+  /* Transparent background */
+  background: transparent;
+  /* Orange border */
+  border: 2px solid #FF6B35;
+  /* Rounded corners for modern look */
+  border-radius: 25px;
+  /* Letter spacing for elegance */
+  letter-spacing: 1.5px;
+  /* Top margin for spacing */
+  margin-top: 12px;
+  /* Height for large touch target */
+  height: 50px;
+  /* Orange text color */
+  color: #FF6B35;
+  /* Bold font */
+  font-weight: 700;
+  /* Cursor shows clickability */
+  cursor: pointer;
+  /* Smooth transitions */
+  transition: all 0.3s ease;
+}
+
+/* Submit button hover state */
+#contact input[type="submit"]:hover {
+  /* Orange background on hover */
+  background: #FF6B35;
+  /* White text on hover */
+  color: #ffffff;
+  /* Lift effect */
+  transform: translateY(-2px);
+  /* Add shadow */
+  box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
+}
+
+
+/* ===== FOOTER SECTION STYLES ===== */
+/* Footer section container */
 footer {
-  background: url('../images/footer-bg.jpg') 50% 0 repeat-y fixed;
-  -webkit-background-size: cover;
+  /* Background with overlay for text readability */
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../images/footer-bg.jpg') 50% center fixed;
+  /* Ensure background covers full area */
   background-size: cover;
+  /* Center background */
   background-position: center;
+  /* White text for contrast */
   color: #ffffff;
-  padding-top: 80px;
-  padding-bottom: 80px;
+  /* Top padding for spacing */
+  padding-top: 50px;
+  /* Bottom padding for spacing */
+  padding-bottom: 30px;
+  /* Add margin to separate from body */
+  margin-top: 60px;
 }
+
+/* Footer main heading */
 footer h2 {
-  padding-bottom: 14px;
+  /* Bottom padding for spacing */
+  padding-bottom: 20px;
+  /* Font weight */
+  font-weight: 600;
+  /* Font size */
+  font-size: 24px;
 }
+
+/* Footer secondary heading */
 footer h3 {
-  padding-top: 8px;
+  /* Top padding for spacing */
+  padding-top: 12px;
+  /* Font size */
+  font-size: 16px;
+  /* Reset margin */
+  margin: 0;
 }
+
+/* Footer paragraph text */
 footer p {
+  /* White text for contrast on dark background */
   color: #ffffff;
+  /* Line height for readability */
+  line-height: 26px;
+  /* Light weight */
+  font-weight: 400;
 }
+
+/* Footer span/accent text */
 footer span {
-  font-weight: bold;
+  /* Bold text for emphasis */
+  font-weight: 700;
+  /* Left padding for spacing */
   padding-left: 24px;
 }
+
+/* Phone and address styling */
 footer .ph, footer .address {
+  /* Top padding */
   padding-top: 12px;
+  /* Bottom padding */
   padding-bottom: 12px;
 }
+
+/* Footer icon styling */
 footer .fa {
-  font-size: 12px;
-  padding-right: 10px;
-}
-
-/* social icon */
-.social-icon {
-  padding: 0;
-}
-.social-icon li {
-  list-style: none;
-  display: inline-block;
-  padding: 0;
-}
-.social-icon li a {
-  background: #f0f0f0;
-  border-radius: 50%;
-  color: #5C5C5C;
+  /* Smaller icons */
   font-size: 16px;
-  width: 48px;
-  height: 48px;
-  line-height: 48px;
-  text-align: center;
-  text-decoration: none;
-  transition: all 0.4s ease-in-out;
-  margin-top: 12px;
-  margin-right: 16px;
-  top: 0;
-  position: relative;
-  padding: 0;
-}
-.social-icon li a:hover {
-  background: #F6D76B;
-  top: 5px;
+  /* Right padding for spacing from text */
+  padding-right: 10px;
+  /* Orange color for icons */
+  color: #FF6B35;
 }
 
-/* copyright section */
+/* ===== COPYRIGHT SECTION STYLES ===== */
+/* Copyright section background */
 #copyright {
-  background: #343434;
+  /* Dark background color */
+  background: #1a1a1a;
+  /* White text */
   color: #ffffff;
-  padding-top: 80px;
-  padding-bottom: 80px;
+  /* Top padding */
+  padding-top: 30px;
+  /* Bottom padding */
+  padding-bottom: 30px;
+  /* Center alignment */
   text-align: center;
+  /* Smooth transitions */
+  transition: all 0.3s ease;
 }
+
+/* Copyright paragraph text */
 #copyright p {
+  /* White text color */
   color: #ffffff;
+  /* Normal weight */
+  font-weight: 400;
 }
+
+/* Copyright links */
 #copyright a {
+  /* White link color */
   color: #ffffff;
+  /* Remove underline decoration */
+  text-decoration: none;
+  /* Smooth transitions */
+  transition: all 0.3s ease;
 }
+
+/* Copyright link hover state */
 #copyright a:hover {
-  color: #FF0;
+  /* Orange color on hover */
+  color: #FF6B35;
+  /* Add slight transform */
+  transform: translateY(-2px);
+}
+
+/* ===== SOCIAL ICONS STYLES ===== */
+/* Social icon list container */
+.social-icon {
+  /* Reset default list padding */
+  padding: 0;
+  /* Margin for spacing */
+  margin: 20px 0;
+}
+
+/* Individual social icon items */
+.social-icon li {
+  /* Remove bullet point */
+  list-style: none;
+  /* Inline display for horizontal layout */
+  display: inline-block;
+  /* Reset padding */
+  padding: 0;
+  /* Margin for spacing between icons */
+  margin: 0 8px;
+}
+
+/* Social icon link styling */
+.social-icon li a {
+  /* Light background for icons */
+  background: linear-gradient(135deg, #FF6B35 0%, #E55A2D 100%);
+  /* Make icons circular */
+  border-radius: 50%;
+  /* Orange text color */
+  color: #ffffff;
+  /* Icon font size */
+  font-size: 18px;
+  /* Square dimensions for circular shape */
+  width: 50px;
+  height: 50px;
+  /* Center text within circle */
+  line-height: 50px;
+  /* Center content horizontally */
+  text-align: center;
+  /* Remove text decoration */
+  text-decoration: none;
+  /* Smooth transitions for hover effects */
+  transition: all 0.4s ease-in-out;
+  /* Top positioning for lift animation */
+  top: 0;
+  /* Position relative for transform */
+  position: relative;
+  /* Reset padding */
+  padding: 0;
+  /* Add box shadow for depth */
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
+}
+
+/* Social icon hover state */
+.social-icon li a:hover {
+  /* Darker background on hover */
+  background: linear-gradient(135deg, #E55A2D 0%, #D14B23 100%);
+  /* Lift animation on hover */
+  top: -8px;
+  /* Enhanced shadow on hover */
+  box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
+  /* Scale animation */
+  transform: scale(1.1);
+}
+
+/* ===== CARD AND CONTAINER STYLES (For modernization) ===== */
+/* Bootstrap card enhancement */
+.card {
+  /* Smooth transitions */
+  transition: all 0.3s ease;
+  /* Box shadow for elevation effect */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  /* Border radius for modern look */
+  border-radius: 8px;
+  /* Remove default border */
+  border: none;
+}
+
+/* Card hover effect */
+.card:hover {
+  /* Lift effect on hover */
+  transform: translateY(-8px);
+  /* Enhanced shadow on hover */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Card body padding */
+.card-body {
+  /* Spacious padding */
+  padding: 24px;
+}
+
+/* Badge styling for modern look */
+.badge {
+  /* Padding for better appearance */
+  padding: 8px 12px;
+  /* Border radius for rounded corners */
+  border-radius: 20px;
+  /* Font weight */
+  font-weight: 600;
+}
+
+/* Alert message styling */
+.alert {
+  /* Smooth transitions */
+  transition: all 0.3s ease;
+  /* Border radius */
+  border-radius: 8px;
+  /* Remove default border */
+  border: none;
+  /* Margin for spacing */
+  margin: 15px 0;
+  /* Font weight */
+  font-weight: 500;
+}
+
+/* ===== BUTTON STYLES ===== */
+/* Primary button styling */
+.btn-primary {
+  /* Orange background */
+  background: #FF6B35;
+  /* Dark border */
+  border: 2px solid #FF6B35;
+  /* Font weight */
+  font-weight: 600;
+  /* Border radius for modern look */
+  border-radius: 5px;
+  /* Smooth transitions */
+  transition: all 0.3s ease;
+}
+
+/* Primary button hover */
+.btn-primary:hover {
+  /* Darker orange on hover */
+  background: #E55A2D;
+  /* Matching border */
+  border-color: #E55A2D;
+  /* Lift effect */
+  transform: translateY(-2px);
+  /* Shadow on hover */
+  box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
+}
+
+/* Info button color */
+.btn-info {
+  /* Light blue background */
+  background: #3498db;
+  /* Smooth transitions */
+  transition: all 0.3s ease;
+}
+
+/* Info button hover */
+.btn-info:hover {
+  /* Darker blue */
+  background: #2980b9;
+  /* Lift effect */
+  transform: translateY(-2px);
+}
+
+/* Dark section styling */
+.home.bg-dark {
+  /* Dark background */
+  background: #2d3436;
+  /* Padding for spacing */
+  padding: 80px 0;
 }
