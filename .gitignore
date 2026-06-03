@@ -1,1 +1,7 @@
 __pycache__git/
+settings.py
+db.sqlite3
+*.pyc
+*.pyo
+*.pyd
+*.swp   
